@@ -1,8 +1,14 @@
 import React, { Component } from "react"
-import { Platform,TextInput, Keyboard, TouchableHighlight } from "react-native"
+import {
+  Platform,
+  TextInput,
+  Keyboard,
+  TouchableHighlight,
+  TouchableOpacity
+} from "react-native"
 import styles from "./styles"
-import { } from "react-native-gesture-handler"
 import { Container, Body, Text, View } from "native-base"
+import { Icon } from "react-native-elements"
 
 //Components
 import Logo from "../components/Logo"
@@ -11,25 +17,28 @@ import SigninInput from "./components/SigninInput"
 import SigninButton from "./components/SigninButton"
 import SignupLink from "./components/SignupLink"
 import ForgotLink from "./components/ForgotLink"
-import Links from './components/Links'
+import Links from "./components/Links"
 
 class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isFocus: false,
-      email : "",
-      password: ""
+      phoneNumber: "",
+      password: "",
+      phoneNumberFocusColor: "#d1d1d1",
+      passwordFocusColor: "#d1d1d1",
+      passwordHide: true
     }
   }
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      this._onFocus,
+      "keyboardDidShow",
+      this._onFocus
     )
     this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      this._onBlur,
+      "keyboardDidHide",
+      this._onBlur
     )
   }
 
@@ -43,14 +52,17 @@ class Index extends Component {
       isFocus: true
     })
   }
+
   _onBlur = () => {
     this.setState({
-      isFocus: false
+      isFocus: false,
+      phoneNumberFocusColor: "#d1d1d1",
+      passwordFocusColor: "#d1d1d1"
     })
   }
   render() {
     const onFocus = this.state.isFocus
-    let welcome, forgotLink, signupLink, link
+    let welcome, forgotLink, link, borderColor
 
     if (onFocus == false) {
       welcome = <Welcome />
@@ -69,16 +81,50 @@ class Index extends Component {
           <View style={styles.signinForm}>
             <TextInput
               style={styles.signinInput}
-              placeholder="Email or Phone Number"
+              placeholder="Phone Number"
               placeholderTextColor="#9B9CB4"
-              onSubmitEditing={Keyboard.dismiss} 
+              onSubmitEditing={Keyboard.dismiss}
+              onFocus={() =>
+                this.setState({ phoneNumberFocusColor: "#211818" })
+              }
+              onBlur={() => this.setState({ phoneNumberFocusColor: "#d1d1d1" })}
             />
-            <TextInput
-              style={styles.signinInput}
-              secureTextEntry={true}
-              placeholder="Password"
-              placeholderTextColor="#9B9CB4"
-              onSubmitEditing={Keyboard.dismiss} 
+            <View
+              style={{
+                height: 2,
+                backgroundColor: this.state.phoneNumberFocusColor
+              }}
+            />
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TextInput
+                style={styles.signinInput}
+                secureTextEntry={this.state.passwordHide}
+                placeholder="Password"
+                placeholderTextColor="#9B9CB4"
+                onSubmitEditing={Keyboard.dismiss}
+                onFocus={() => this.setState({ passwordFocusColor: "#211818" })}
+                onBlur={() => this.setState({ passwordFocusColor: "#d1d1d1" })}
+                onChangeText={passText => this.setState({ password: passText })}
+              />
+              {this.state.password == "" ? (
+                <Text />
+              ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    this.setState({ passwordHide: !this.state.passwordHide })
+                  }
+                >
+                  <Text style={{ fontWeight: "bold", fontSize: 14 }}>
+                    {this.state.passwordHide ? "SHOW" : "HIDE"}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+            <View
+              style={{
+                height: 2,
+                backgroundColor: this.state.passwordFocusColor
+              }}
             />
             {forgotLink}
           </View>

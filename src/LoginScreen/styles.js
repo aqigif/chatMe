@@ -20,12 +20,10 @@ const styles = StyleSheet.create({
     siginForm:{
     },
     signinInput:{
-      width:'100%',
-      borderBottomColor:'#d1d1d1',
+      width:'80%',
       height:70,
       fontSize:18,
       color:'#211818',
-      borderBottomWidth:2
     },
     buttonSigninWrapper:{
       height:'20%',
