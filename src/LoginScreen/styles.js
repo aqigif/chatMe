@@ -25,22 +25,22 @@ const styles = StyleSheet.create({
       fontSize:18,
       color:'#211818',
     },
-    buttonSigninWrapper:{
-      height:'20%',
-      marginTop:20,
-      justifyContent:'center',
+    buttonSigninWrapper: {
+      marginTop: 50,
+      marginBottom: 30,
+      justifyContent: "center"
     },
-    buttonSignin:{
-      backgroundColor:'#f0f6ff',
-      width:150,
-      height:60,
-      justifyContent:'center',
-      borderRadius:10
+    buttonSignin: {
+      backgroundColor: "#f0f6ff",
+      width: 150,
+      height: 60,
+      justifyContent: "center",
+      borderRadius: 10
     },
-    buttonSigninText:{
-      textAlign:'center',
-      fontSize:20,
-      fontWeight:'bold',
+    buttonSigninText: {
+      textAlign: "center",
+      fontSize: 20,
+      fontWeight: "bold"
     },
     link:{
       marginTop:10,

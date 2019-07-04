@@ -1,27 +1,30 @@
 import React, { Component } from "react"
 import { TouchableHighlight, TouchableOpacity, Image, StyleSheet } from "react-native"
 import { Container, View, Content, Text } from "native-base"
+import { withNavigation } from "react-navigation";
+import TimeAgo from 'react-native-timeago';
 
 class RoomList extends Component {
   render() {
     return (
-      <TouchableHighlight underlayColor={"#d1d1d1"} onPress={() => {}}>
+      <TouchableHighlight underlayColor={"#d1d1d1"} onPress={() => 
+        this.props.navigation.navigate('Room',{roomId:this.props.roomId})}>
         <View style={styles.roomListWrapper}>
           <View style={styles.avatarWrapper}>
             <Image
               style={styles.avatar}
               source={{
-                uri:
-                  "https://m.media-amazon.com/images/M/MV5BZThkYjdjNWEtMDM2MS00MDllLWI2OGEtN2JhMmRhZjdmNDUwXkEyXkFqcGdeQXVyNjUyMDYyNDE@._V1_SX1777_CR0,0,1777,999_AL_.jpg"
-              }}
+                uri:this.props.avatar}}
             />
           </View>
           <View style={styles.roomDetailWrapper}>
-            <Text style={styles.roomName}>Room Name</Text>
-            <Text style={styles.lastMessage}>Sender • Last Message</Text>
+            <Text style={styles.roomName}>{this.props.roomName}</Text>
+            <Text style={styles.lastMessage} numberOfLines={1}>{this.props.sender} • {this.props.lastMessage}</Text>
           </View>
           <View style={styles.timeWrapper}>
-            <Text style={styles.time}>Time</Text>
+            <Text style={styles.time}>
+            <TimeAgo time={this.props.time}  interval={60000} />
+            </Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -31,7 +34,7 @@ class RoomList extends Component {
 
 const styles = StyleSheet.create({
   roomListWrapper: { 
-    padding: 20, 
+    padding:20, 
     flexDirection: "row" 
   },
   avatarWrapper: { 
@@ -39,20 +42,22 @@ const styles = StyleSheet.create({
     justifyContent: "center" 
   },
   avatar: {
-    height: 50,
-    width: 50,
-    borderRadius: 25
+    height: 45,
+    width: 45,
+    borderRadius: 45/2
   },
   roomDetailWrapper: { 
     flex: 3, 
-    justifyContent: "center" 
+    justifyContent: "center"
   },
   roomName: { 
-    fontWeight: "bold", 
-    fontSize: 20 
+    fontWeight: "bold",
+    color:'#272123',
+    fontSize: 18
   },
   lastMessage: { 
-    fontSize: 14 
+    fontSize: 14 ,
+    color:'#848589'
   },
   timeWrapper: {
     flex: 1,
@@ -60,7 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
   time: { 
-    fontSize: 14 
+    fontSize: 12 ,
+    color:'#848589'
   }
 })
-export default RoomList
+export default withNavigation(RoomList)
